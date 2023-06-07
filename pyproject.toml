@@ -1,0 +1,12 @@
+[project]
+name = "prolificdreamer"
+version = "0.0.1"
+
+dependencies=[
+    "lerf",
+]
+
+[tool.setuptools.packages.find]
+include = ["ns_prolificdreamer*"]
+
+[project.entry-points.'nerfstudio.method_configs']
