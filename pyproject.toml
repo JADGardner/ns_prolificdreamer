@@ -4,9 +4,11 @@ version = "0.0.1"
 
 dependencies=[
     "nerfstudio>=0.3.0"
+    "diffusers"
 ]
 
 [tool.setuptools.packages.find]
 include = ["prolificdreamer*"]
 
 [project.entry-points.'nerfstudio.method_configs']
+prolificdreamer = 'prolificdreamer.config.prolificdreamer_config:ProlificDreamer'

@@ -16,12 +16,6 @@ from diffusers.models.attention_processor import LoRAAttnProcessor
 from diffusers.models.embeddings import TimestepEmbedding
 from diffusers.utils.import_utils import is_xformers_available
 
-import threestudio
-from threestudio.models.prompt_processors.base import PromptProcessorOutput
-from threestudio.utils.base import BaseModule
-from threestudio.utils.misc import C, cleanup, parse_version
-from threestudio.utils.typing import *
-
 
 class ToWeightsDType(nn.Module):
     def __init__(self, module: nn.Module, dtype: torch.dtype):
