@@ -35,6 +35,16 @@ from rich.progress import (
 from torch.nn.parallel import DistributedDataParallel as DDP
 from typing_extensions import Literal
 
+from diffusers import (
+    DDPMScheduler,
+    DPMSolverMultistepScheduler,
+    StableDiffusionPipeline,
+    UNet2DConditionModel,
+)
+from diffusers.loaders import AttnProcsLayers
+from diffusers.models.attention_processor import LoRAAttnProcessor
+from diffusers.models.embeddings import TimestepEmbedding
+from diffusers.utils.import_utils import is_xformers_available
 
 from nerfstudio.data.datamanagers.base_datamanager import (
     DataManagerConfig,
@@ -55,6 +65,32 @@ class ProlificDreamerPipelineConfig(VanillaPipelineConfig):
     """specifies the datamanager config"""
     model: ModelConfig = ModelConfig()
     """specifies the model config"""
+    pretrained_sd_name_or_path: str = "stabilityai/stable-diffusion-2-1-base"
+    """specifies the pretrained stablediffusion name or path"""
+    pretrained_sd_name_or_path_lora: str = "stabilityai/stable-diffusion-2-1"
+    """specifies the pretrained stablediffusion name or path"""
+    enable_sequential_cpu_offload: bool = False
+    """specifies whether to use sequential cpu offload"""
+    enable_attention_slicing: bool = False
+    """specifies whether to use attention slicing"""
+    enable_channels_last_format: bool = False
+    """specifies whether to use channels last format"""
+    guidance_scale: float = 7.5
+    """specifies the CFG guidance scale"""
+    guidance_scale_lora: float = 1.0
+    """specifies the lora guidance scale"""
+    half_precision_weights: bool = True
+    """specifies whether to use half precision weights"""
+    lora_cfg_training: bool = True
+    """specifies whether to use lora cfg training"""
+    lora_n_timestamp_samples: int = 1
+    """specifies the number of timestamp samples"""
+    min_step_percent: float = 0.02
+    max_step_percent: float = 0.98
+    max_step_percent_annealed: float = 0.5
+    anneal_start_step: Optional[int] = 5000
+    view_dependent_prompting: bool = True
+    camera_condition_type: str = "extrinsics"
 
 
 class ProlificDreamerPipeline(VanillaPipeline):

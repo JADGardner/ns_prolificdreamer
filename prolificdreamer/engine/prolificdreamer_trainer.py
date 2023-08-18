@@ -93,6 +93,16 @@ class ProlificDreamerTrainer(Trainer):
     def __init__(self, config: ProlificDreamerTrainerConfig, local_rank: int = 0, world_size: int = 1) -> None:
         super().__init__(config, local_rank, world_size)
         self.prompt = ViewerText(name="Prompt", default_value="Enter Prompt Here")
+        self.start_button = ViewerButton(name="Start", cb_hook=self.handle_start)
+        self.reset_button = ViewerButton(name="Reset", cb_hook=self.handle_reset)
+
+        self.training_shedule_state = Literal[""]
+
+    def handle_start(self, button: ViewerButton) -> None:
+        pass
+    
+    def handle_reset(self, button: ViewerButton) -> None:
+        pass
 
     def setup(self, test_mode: Literal["test", "val", "inference"] = "val") -> None:
         """Setup the Trainer by calling other setup functions.
